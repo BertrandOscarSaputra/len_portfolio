@@ -1,4 +1,5 @@
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
+import CurvedLoop from "@/components/CurvedLoop";
 
 export default function Home() {
   return (
@@ -6,7 +7,6 @@ export default function Home() {
       {/* HEADER / HERO SECTION */}
       <section className="relative w-full h-screen overflow-hidden">
         {/* ⭐ STAR BACKGROUND */}
-        <GravityStarsBackground className="absolute inset-0 z-0 pointer-events-none" />
 
         {/* 🎥 VIDEO BACKGROUND */}
         <video
@@ -25,9 +25,14 @@ export default function Home() {
 
         {/* HERO CONTENT */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <h1 className="text-6xl font-extrabold drop-shadow-xl tracking-wide">
-            Fallen
-          </h1>
+          <CurvedLoop
+            marqueeText="Welcome ✦ to ✦ Len's ✦ Lair ✦  "
+            speed={2}
+            curveAmount={500}
+            direction="left"
+            interactive={true}
+            className="custom-text-style"
+          />
 
           <h2 className="mt-4 text-2xl font-light tracking-widest text-gray-200">
             Motion Graphic Designer
@@ -46,6 +51,12 @@ export default function Home() {
 
       {/* SECTION BELOW VIDEO */}
       <section className="py-20 px-6 bg-black">
+        <GravityStarsBackground
+          className="absolute inset-0 "
+          mouseGravity="attract"
+          gravityStrength={100}
+          starsInteraction={true}
+        />
         <h2 className="text-4xl font-bold mb-6 text-center">About Me</h2>
 
         <p className="text-lg max-w-3xl mx-auto text-center text-gray-300">
