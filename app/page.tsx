@@ -1,5 +1,4 @@
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
-import CurvedLoop from "@/components/CurvedLoop";
 
 export default function Home() {
   return (
@@ -25,15 +24,6 @@ export default function Home() {
 
         {/* HERO CONTENT */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <CurvedLoop
-            marqueeText="Welcome ✦ to ✦ Len's ✦ Lair ✦  "
-            speed={2}
-            curveAmount={500}
-            direction="left"
-            interactive={true}
-            className="custom-text-style"
-          />
-
           <h2 className="mt-4 text-2xl font-light tracking-widest text-gray-200">
             Motion Graphic Designer
           </h2>
