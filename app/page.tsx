@@ -1,13 +1,14 @@
+"use client";
+
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
     <div className="relative text-white w-full min-h-screen overflow-hidden">
-      {/* HEADER / HERO SECTION */}
+      {/* HEADER / HERO */}
       <section className="relative w-full h-screen overflow-hidden">
-        {/* ⭐ STAR BACKGROUND */}
-
-        {/* 🎥 VIDEO BACKGROUND */}
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
           autoPlay
@@ -16,15 +17,12 @@ export default function Home() {
           playsInline
         >
           <source src="/videos/portfolio.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
         </video>
 
-        {/* DARK OVERLAY */}
         <div className="absolute inset-0 bg-black/50 z-[-1]" />
 
-        {/* HERO CONTENT */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <h1 className="mt-4 text-2xl font-bold tracking-widest text-gray-200 font-bonheur sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="mt-4 text-2xl font-extrabold tracking-widest text-gray-200 font-bonheur sm:text-4xl md:text-5xl lg:text-6xl">
             Len Licht
           </h1>
 
@@ -39,21 +37,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION BELOW VIDEO */}
-      <section className="py-20 px-6 bg-black">
+      {/* ABOUT SECTION */}
+      <section className="py-20 px-6 bg-black relative">
         <GravityStarsBackground
-          className="absolute inset-0 "
+          className="absolute inset-0"
           mouseGravity="attract"
           gravityStrength={100}
           starsInteraction={true}
         />
-        <h2 className="text-4xl font-bold mb-6 text-center">About Me</h2>
 
-        <p className="text-lg max-w-3xl mx-auto text-center text-gray-300">
-          Hi! I&apos;m a motion graphic designer specializing in high-impact
-          visuals, animation, and creative storytelling. I transform ideas into
-          compelling visual experiences that engage and inspire audiences.
-        </p>
+        <h2 className="text-4xl font-bold mb-12 text-center">About Me</h2>
+
+        {/* BLOCK 1 — Avatar Left, Text Right */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex flex-col md:flex-row items-center gap-10 max-w-5xl mx-auto mb-20"
+        >
+          <Image
+            src="/images/len_avatar.png"
+            alt="Avatar 1"
+            width={200}
+            height={200}
+            className="rounded-full rotate-y-180"
+          />
+
+          <p className="text-lg text-gray-300 md:text-left text-center">
+            Hi! I’m a motion graphic designer specializing in cinematic visuals,
+            animation, and creative storytelling. I create impactful visuals
+            that connect with audiences.
+          </p>
+        </motion.div>
+
+        {/* BLOCK 2 — Avatar Right, Text Left */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex flex-col md:flex-row-reverse items-center gap-10 max-w-5xl mx-auto"
+        >
+          <Image
+            src="/images/len_avatar.png"
+            alt="Avatar 2"
+            width={200}
+            height={200}
+            className="rounded-full"
+          />
+
+          <p className="text-lg text-gray-300 md:text-right text-center">
+            My work blends motion graphics, editing, and atmosphere-focused
+            design to create strong emotional impact. I aim to turn ideas into
+            immersive visual experiences.
+          </p>
+        </motion.div>
       </section>
     </div>
   );
