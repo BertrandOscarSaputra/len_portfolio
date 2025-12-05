@@ -49,8 +49,8 @@ export default function Home() {
         <h2 className="text-4xl font-bold mb-6 text-center">About Me</h2>
 
         <p className="text-lg max-w-3xl mx-auto text-center text-gray-300">
-          Hi! I'm a motion graphic designer specializing in high-impact visuals,
-          animation, and creative storytelling. I transform ideas into
+          Hi! I&apos;m a motion graphic designer specializing in high-impact
+          visuals, animation, and creative storytelling. I transform ideas into
           compelling visual experiences that engage and inspire audiences.
         </p>
       </section>
