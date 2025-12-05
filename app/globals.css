@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+.font-bonheur {
+  font-family: var(--font-bonheur-royale);
+}

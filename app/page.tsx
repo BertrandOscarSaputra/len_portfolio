@@ -15,7 +15,7 @@ export default function Home() {
           muted
           playsInline
         >
-          <source src="/videos/main.mp4" type="video/mp4" />
+          <source src="/videos/portfolio.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
@@ -24,9 +24,9 @@ export default function Home() {
 
         {/* HERO CONTENT */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <h2 className="mt-4 text-2xl font-light tracking-widest text-gray-200">
-            Motion Graphic Designer
-          </h2>
+          <h1 className="mt-4 text-2xl font-bold tracking-widest text-gray-200 font-bonheur sm:text-4xl md:text-5xl lg:text-6xl">
+            Len Licht
+          </h1>
 
           <p className="mt-6 text-lg max-w-3xl text-gray-300">
             Creating cinematic animations, dynamic visuals, and impactful motion

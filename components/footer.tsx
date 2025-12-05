@@ -53,7 +53,7 @@ export default function Footer() {
                   className="invert brightness-200 w-5 h-5"
                 />
               </div>
-              X (Twitter)
+              X
             </li>
 
             {/* Instagram */}
