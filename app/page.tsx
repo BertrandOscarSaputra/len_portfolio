@@ -7,10 +7,11 @@ import { motion } from "framer-motion";
 export default function Home() {
   return (
     <div className="relative text-white w-full min-h-screen overflow-hidden">
-      {/* HEADER / HERO */}
+      {/* ENHANCED HEADER / HERO */}
       <section className="relative w-full h-screen overflow-hidden">
+        {/* Video Background */}
         <video
-          className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+          className="absolute top-0 left-0 w-full h-full object-cover z-[-2]"
           autoPlay
           loop
           muted
@@ -19,38 +20,171 @@ export default function Home() {
           <source src="/videos/portfolio.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/70 z-[-1]" />
+        {/* Enhanced Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-[-1]" />
 
+        {/* Dynamic Light Effects */}
+        <motion.div
+          className="absolute inset-0 z-[-1]"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 50%, rgba(147, 51, 234, 0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)",
+            ],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+
+        {/* Subtle Floating Particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-[1px] h-[1px] bg-white/20 rounded-full"
+              initial={{
+                x: Math.random() * 100 + "%",
+                y: Math.random() * 100 + "%",
+                opacity: 0,
+              }}
+              animate={{
+                y: [null, "-100vh"],
+                opacity: [0, 0.4, 0],
+              }}
+              transition={{
+                duration: Math.random() * 15 + 15,
+                repeat: Infinity,
+                delay: Math.random() * 3,
+                ease: "linear",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Main Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 sm:px-6">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="mt-4 text-4xl font-extrabold tracking-widest text-white font-bonheur sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
-          >
-            Len Licht
-          </motion.h1>
+          {/* Title with Original Styling */}
+          <div className="relative mb-8">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="mt-4 text-4xl font-extrabold tracking-widest text-white font-bonheur sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+            >
+              Len Licht
+            </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            {/* Subtle Glow Effect */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.3, scale: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-xl -z-10"
+            />
+          </div>
+
+          {/* Enhanced Tagline */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="mt-6 text-base sm:text-lg md:text-xl max-w-2xl md:max-w-3xl text-gray-200 px-4"
+            className="max-w-3xl"
           >
-            Creating cinematic animations, dynamic visuals, and impactful motion
-            graphics.
-          </motion.p>
+            <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-300 font-light tracking-wide">
+              Creating{" "}
+              <span className="text-blue-300 font-medium">
+                cinematic animations
+              </span>
+              ,{" "}
+              <span className="text-purple-300 font-medium">
+                dynamic visuals
+              </span>
+              , and{" "}
+              <span className="text-blue-300 font-medium">
+                impactful motion graphics
+              </span>
+            </p>
 
-          <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6, ease: "backOut" }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-8 sm:mt-10 px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-black rounded-full text-base sm:text-lg font-semibold hover:bg-gray-200 transition-all shadow-lg shadow-white/20 hover:shadow-white/30"
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-4 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto"
+            >
+              Crafting visual stories that move, inspire, and transform ideas
+              into unforgettable experiences
+            </motion.p>
+          </motion.div>
+
+          {/* Decorative Elements */}
+          <motion.div
+            className="absolute top-1/3 left-1/4 w-48 h-48 bg-blue-500/5 rounded-full blur-2xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-purple-500/5 rounded-full blur-2xl"
+            animate={{
+              scale: [1.1, 1, 1.1],
+              opacity: [0.2, 0.1, 0.2],
+            }}
+            transition={{
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           >
-            View Portfolio
-          </motion.button>
+            <div className="flex flex-col items-center">
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="w-6 h-10 border border-gray-400/50 rounded-full flex justify-center pt-2"
+              >
+                <motion.div
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="w-1 h-3 bg-gray-400 rounded-full"
+                />
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 2 }}
+                className="mt-2 text-xs text-gray-400 tracking-wider"
+              >
+                Explore
+              </motion.p>
+            </div>
+          </motion.div>
         </div>
       </section>
 

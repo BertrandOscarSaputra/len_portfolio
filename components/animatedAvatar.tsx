@@ -1,8 +1,14 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, easeInOut } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  easeInOut,
+  easeOut,
+} from "framer-motion";
 import Image from "next/image";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 
 interface AnimatedAvatarProps {
   src: string;
@@ -33,6 +39,12 @@ export default function AnimatedAvatar({
 }: AnimatedAvatarProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [rotationKey, setRotationKey] = useState(0); // Key to force re-render
+
+  // Force re-render when rotateDirection changes
+  useEffect(() => {
+    setRotationKey((prev) => prev + 1);
+  }, [rotateDirection]);
 
   // For mouse tracking effect
   const x = useMotionValue(0);
@@ -62,15 +74,14 @@ export default function AnimatedAvatar({
     setIsHovered(false);
   };
 
-  // Floating animation with variations
+  // Floating animation
   const floatingAnimation = {
     y: ["0%", "-8%", "0%"],
-    rotate: isHovered ? [0, 2, -2, 0] : 0,
     transition: {
       duration: isHovered ? 2 : 3,
       repeat: Infinity,
       repeatType: "mirror" as const,
-      ease: "easeInOut",
+      ease: easeInOut,
     },
   };
 
@@ -96,37 +107,17 @@ export default function AnimatedAvatar({
       transition: {
         duration: 0.8,
         delay: delay,
-        ease: easeInOut,
+        ease: easeOut,
       },
     },
   };
 
-  // 3D rotation with direction control
-  const rotate3DAnimation = {
-    rotateY:
-      rotateDirection === "counter-clockwise"
-        ? [0, -360] // Counter-clockwise rotation
-        : [0, 360], // Clockwise rotation
-    transition: {
-      duration: 20,
-      repeat: Infinity,
-      ease: "linear" as const,
-    },
-  };
-
-  // Hover rotation (faster)
-  const hoverRotation = {
-    rotateY: rotateDirection === "counter-clockwise" ? [0, -720] : [0, 720],
-    scale: 1.05,
-    transition: {
-      duration: 8,
-      repeat: Infinity,
-      ease: "linear" as const,
-    },
-  };
+  // SIMPLIFIED ROTATION - This will work better
+  const rotationAmount = rotateDirection === "counter-clockwise" ? -360 : 360;
 
   return (
     <motion.div
+      key={rotationKey} // Force re-render when direction changes
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
@@ -143,23 +134,8 @@ export default function AnimatedAvatar({
           className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-3xl border border-white/10 backdrop-blur-sm"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: delay + 0.2 }}
           viewport={{ once: true }}
-          animate={{
-            borderColor: isHovered
-              ? [
-                  "rgba(255,255,255,0.1)",
-                  "rgba(147,51,234,0.3)",
-                  "rgba(59,130,246,0.3)",
-                  "rgba(255,255,255,0.1)",
-                ]
-              : "rgba(255,255,255,0.1)",
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            opacity: { duration: 0.6, delay: delay + 0.2 },
-            scale: { duration: 0.6, delay: delay + 0.2 },
-          }}
         >
           <div className="absolute inset-0 rounded-3xl border border-white/5" />
           <div className="absolute -top-2 md:-top-3 left-1/2 transform -translate-x-1/2 w-4 h-4 md:w-6 md:h-6 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full" />
@@ -170,13 +146,29 @@ export default function AnimatedAvatar({
       )}
 
       <motion.div
-        animate={{ ...floatingAnimation, ...clickAnimation }}
+        animate={floatingAnimation}
         whileHover={{ scale: interactive ? 1.08 : 1.05 }}
         whileTap={{ scale: interactive ? 0.98 : 0.95 }}
         className={`relative z-10 cursor-pointer ${className}`}
       >
         {rotate3D ? (
-          <motion.div animate={isHovered ? hoverRotation : rotate3DAnimation}>
+          <motion.div
+            key={`rotate-${rotateDirection}`}
+            animate={{
+              rotateY: isHovered ? rotationAmount * 2 : rotationAmount,
+              scale: isHovered ? 1.05 : 1,
+            }}
+            transition={{
+              rotateY: {
+                duration: isHovered ? 8 : 20,
+                repeat: Infinity,
+                ease: "linear",
+              },
+              scale: {
+                duration: 0.3,
+              },
+            }}
+          >
             <Image
               src={src}
               alt={alt}
