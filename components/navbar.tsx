@@ -5,30 +5,34 @@ import Link from "next/link";
 import Image from "next/image";
 
 const LINKS = [
-  { id: "home", label: "Home" },
-  { id: "projects", label: "Projects" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
+  { id: "home", label: "Home", href: "/#home" },
+  { id: "projects", label: "Projects", href: "/#projects" },
+  { id: "gallery", label: "Gallery", href: "/gallery" },
+  { id: "about", label: "About", href: "/#about" },
+  { id: "contact", label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
 
-  function handleNavClick(e: React.MouseEvent, id: string) {
-    e.preventDefault();
+  function handleNavClick(e: React.MouseEvent, link: typeof LINKS[0]) {
     setOpen(false);
-    setActive(id);
+    setActive(link.id);
 
-    const el = document.getElementById(id);
-    if (el) {
-      const navHeight = document.querySelector("nav")?.clientHeight ?? 72;
-      const offset =
-        el.getBoundingClientRect().top + window.scrollY - navHeight;
-      window.scrollTo({ top: offset, behavior: "smooth" });
-    } else {
-      window.location.hash = `#${id}`;
+    // If it's an internal hash link on the same page, handle scroll
+    if (link.href.startsWith("/#")) {
+      const id = link.href.replace("/#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        const navHeight = document.querySelector("nav")?.clientHeight ?? 72;
+        const offset =
+          el.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+      }
     }
+    // For full page links like /gallery, let default navigation happen
   }
 
   return (
@@ -37,10 +41,17 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           {/* Logo */}
           <Link
-            href="#home"
-            onClick={(e) =>
-              handleNavClick(e as unknown as React.MouseEvent, "home")
-            }
+            href="/"
+            onClick={(e) => {
+              setActive("home");
+              const el = document.getElementById("home");
+              if (el) {
+                e.preventDefault();
+                const navHeight = document.querySelector("nav")?.clientHeight ?? 72;
+                const offset = el.getBoundingClientRect().top + window.scrollY - navHeight;
+                window.scrollTo({ top: offset, behavior: "smooth" });
+              }
+            }}
             className="flex items-center gap-3"
           >
             <Image
@@ -57,9 +68,9 @@ export default function Navbar() {
             {LINKS.map((l) => (
               <li key={l.id}>
                 <Link
-                  href={`#${l.id}`}
+                  href={l.href}
                   onClick={(e) =>
-                    handleNavClick(e as unknown as React.MouseEvent, l.id)
+                    handleNavClick(e as unknown as React.MouseEvent, l)
                   }
                   className={`relative px-1 py-1 transition-colors ${
                     active === l.id
@@ -98,9 +109,9 @@ export default function Navbar() {
             {LINKS.map((l) => (
               <li key={l.id}>
                 <Link
-                  href={`#${l.id}`}
+                  href={l.href}
                   onClick={(e) =>
-                    handleNavClick(e as unknown as React.MouseEvent, l.id)
+                    handleNavClick(e as unknown as React.MouseEvent, l)
                   }
                   className={`block rounded px-3 py-2 transition-colors ${
                     active === l.id
