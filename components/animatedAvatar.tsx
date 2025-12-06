@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, easeInOut } from "framer-motion";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
 
@@ -15,6 +15,7 @@ interface AnimatedAvatarProps {
   delay?: number;
   rotate3D?: boolean;
   interactive?: boolean;
+  rotateDirection?: "clockwise" | "counter-clockwise";
 }
 
 export default function AnimatedAvatar({
@@ -28,6 +29,7 @@ export default function AnimatedAvatar({
   delay = 0,
   rotate3D = false,
   interactive = true,
+  rotateDirection = "clockwise",
 }: AnimatedAvatarProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -94,19 +96,32 @@ export default function AnimatedAvatar({
       transition: {
         duration: 0.8,
         delay: delay,
-        ease: [0.22, 1, 0.36, 1],
+        ease: easeInOut,
       },
     },
   };
 
-  // 3D rotation with hover enhancement
+  // 3D rotation with direction control
   const rotate3DAnimation = {
-    rotateY: isHovered ? [0, 720] : [0, 360],
-    scale: isHovered ? 1.05 : 1,
+    rotateY:
+      rotateDirection === "counter-clockwise"
+        ? [0, -360] // Counter-clockwise rotation
+        : [0, 360], // Clockwise rotation
     transition: {
-      duration: isHovered ? 8 : 20,
+      duration: 20,
       repeat: Infinity,
-      ease: "linear",
+      ease: "linear" as const,
+    },
+  };
+
+  // Hover rotation (faster)
+  const hoverRotation = {
+    rotateY: rotateDirection === "counter-clockwise" ? [0, -720] : [0, 720],
+    scale: 1.05,
+    transition: {
+      duration: 8,
+      repeat: Infinity,
+      ease: "linear" as const,
     },
   };
 
@@ -128,7 +143,6 @@ export default function AnimatedAvatar({
           className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-3xl border border-white/10 backdrop-blur-sm"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: delay + 0.2 }}
           viewport={{ once: true }}
           animate={{
             borderColor: isHovered
@@ -140,7 +154,12 @@ export default function AnimatedAvatar({
                 ]
               : "rgba(255,255,255,0.1)",
           }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            opacity: { duration: 0.6, delay: delay + 0.2 },
+            scale: { duration: 0.6, delay: delay + 0.2 },
+          }}
         >
           <div className="absolute inset-0 rounded-3xl border border-white/5" />
           <div className="absolute -top-2 md:-top-3 left-1/2 transform -translate-x-1/2 w-4 h-4 md:w-6 md:h-6 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full" />
@@ -151,14 +170,13 @@ export default function AnimatedAvatar({
       )}
 
       <motion.div
-        animate={floatingAnimation}
+        animate={{ ...floatingAnimation, ...clickAnimation }}
         whileHover={{ scale: interactive ? 1.08 : 1.05 }}
         whileTap={{ scale: interactive ? 0.98 : 0.95 }}
-        animate={clickAnimation}
         className={`relative z-10 cursor-pointer ${className}`}
       >
         {rotate3D ? (
-          <motion.div animate={rotate3DAnimation}>
+          <motion.div animate={isHovered ? hoverRotation : rotate3DAnimation}>
             <Image
               src={src}
               alt={alt}

@@ -81,7 +81,8 @@ export default function Home() {
               alt="Avatar 2"
               size={240}
               hasBox={false}
-              direction="right"
+              direction="left"
+              rotateDirection="clockwise"
               delay={0.1}
               rotate3D={true}
               interactive={false}
@@ -177,7 +178,8 @@ export default function Home() {
               size={240}
               hasBox={false}
               direction="right"
-              delay={1.0}
+              rotateDirection="counter-clockwise"
+              delay={0.1}
               rotate3D={true}
               interactive={false}
               className="scale-90 sm:scale-100"
