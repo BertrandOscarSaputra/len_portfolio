@@ -4,6 +4,29 @@ import { GravityStarsBackground } from "@/components/animate-ui/components/backg
 import AnimatedAvatar from "@/components/animatedAvatar";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import Link from "next/link";
+
+// Sample works data - can be replaced with actual content
+const latestWorks = [
+  {
+    id: 1,
+    title: "Cinematic Intro",
+    category: "Motion Graphics",
+    videoSrc: "/videos/main.mp4",
+  },
+  {
+    id: 2,
+    title: "Character Animation",
+    category: "Animation",
+    videoSrc: "/videos/animegirl.mp4",
+  },
+  {
+    id: 3,
+    title: "3D Visualization",
+    category: "3D Animation",
+    videoSrc: "/videos/Plane.mp4",
+  },
+];
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -282,6 +305,69 @@ export default function Home() {
             />
           </div>
         </div>
+      </section>
+
+      {/* LATEST WORKS SECTION */}
+      <section id="projects" className="py-12 sm:py-24 px-4 sm:px-6 bg-black relative">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center sm:text-left bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Latest Works
+            </h2>
+            <Link
+              href="/gallery"
+              className="mt-4 sm:mt-0 text-sm sm:text-base text-gray-400 hover:text-white transition-colors flex items-center gap-2 group"
+            >
+              View All
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {latestWorks.map((work, index) => (
+              <motion.div
+                key={work.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group relative rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300"
+              >
+                <div className="aspect-video relative overflow-hidden">
+                  <video
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    muted
+                    loop
+                    playsInline
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.pause();
+                      e.currentTarget.currentTime = 0;
+                    }}
+                    onTouchStart={(e) => e.currentTarget.play()}
+                  >
+                    <source src={work.videoSrc} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-4">
+                  <span className="text-xs text-blue-400 uppercase tracking-wider">
+                    {work.category}
+                  </span>
+                  <h3 className="mt-1 text-lg font-semibold text-white">
+                    {work.title}
+                  </h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </section>
     </div>
   );
