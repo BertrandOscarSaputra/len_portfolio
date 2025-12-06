@@ -177,7 +177,7 @@ export default function Home() {
               size={240}
               hasBox={false}
               direction="right"
-              delay={0.1}
+              delay={1.0}
               rotate3D={true}
               interactive={false}
               className="scale-90 sm:scale-100"
