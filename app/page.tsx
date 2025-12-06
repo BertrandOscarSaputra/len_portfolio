@@ -192,7 +192,7 @@ export default function Home() {
             <AnimatedAvatar
               src="/images/len_avatar.png"
               alt="Avatar 1"
-              size={isMobile ? 160 : 180}
+              size={isMobile ? 160 : 240}
               hasBox={false}
               direction="left"
               rotateDirection="clockwise"
@@ -271,7 +271,7 @@ export default function Home() {
             <AnimatedAvatar
               src="/images/len_avatar.png"
               alt="Avatar 2"
-              size={isMobile ? 160 : 180}
+              size={isMobile ? 160 : 240}
               hasBox={false}
               direction="right"
               rotateDirection="counter-clockwise"
