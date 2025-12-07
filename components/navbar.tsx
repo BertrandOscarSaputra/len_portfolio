@@ -73,19 +73,31 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-50">
       <div className="backdrop-blur-md bg-white/10 border-b border-white/20">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          {/* Logo - Clicking this goes to home */}
+          {/* Logo with glow effect */}
           <Link
             href="/"
-            className="flex items-center gap-3"
+            className="flex items-center gap-3 group"
             onClick={() => setIsMenuOpen(false)}
           >
-            <Image
-              src="/images/invert_logo.png"
-              alt="Logo"
-              width={36}
-              height={36}
-              className="object-contain scale-200 brightness-200"
-            />
+            {/* Glow container */}
+            <div className="relative">
+              {/* Outer glow ring - hidden by default, shows on hover */}
+              <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-blue-500/30 group-hover:via-purple-500/30 group-hover:to-blue-500/30 blur-lg transition-all duration-300 opacity-0 group-hover:opacity-100" />
+
+              {/* Inner glow ring - more subtle */}
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-400/0 via-purple-400/0 to-blue-400/0 group-hover:from-blue-400/20 group-hover:via-purple-400/20 group-hover:to-blue-400/20 blur-md transition-all duration-300 opacity-0 group-hover:opacity-100" />
+
+              {/* Logo image with brightness and scale animation */}
+              <div className="relative">
+                <Image
+                  src="/images/invert_logo.png"
+                  alt="Logo"
+                  width={36}
+                  height={36}
+                  className="object-contain scale-200 brightness-200 group-hover:brightness-300 group-hover:scale-210 transition-all duration-300"
+                />
+              </div>
+            </div>
           </Link>
 
           {/* Desktop Links */}

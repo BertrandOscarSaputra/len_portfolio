@@ -4,16 +4,16 @@ export default function Footer() {
   const currentYear = 2025;
 
   const contactInfo = {
-    email: "lenlicht@fallenstudio.com",
+    email: "lenlicht@gmail.com",
   };
 
   const socialLinks = [
     {
       name: "Instagram",
       icon: "/images/instagram.svg",
-      url: "https://instagram.com/lenlicht",
+      url: "https://www.instagram.com/lenlenlen1233/",
       alt: "Instagram",
-      handle: "@lenlicht",
+      handle: "@lenlenlen123",
     },
     {
       name: "YouTube",
@@ -32,9 +32,9 @@ export default function Footer() {
     {
       name: "X",
       icon: "/images/x.svg",
-      url: "https://twitter.com/lenlicht",
+      url: "https://x.com/Len_licht",
       alt: "X",
-      handle: "@lenlicht",
+      handle: "@Len_licht",
     },
   ];
 
@@ -109,7 +109,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-white/10">
           <div className="text-center">
             <p className="text-gray-500 text-sm">
-              © {currentYear} Fallen Studio — All Rights Reserved.
+              © {currentYear} Len Licht — All Rights Reserved.
             </p>
             <p className="mt-2 text-xs text-gray-600">
               Crafting visual stories that inspire and transform
