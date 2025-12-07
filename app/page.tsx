@@ -2,6 +2,7 @@
 
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
 import AnimatedAvatar from "@/components/animatedAvatar";
+import WorksCarousel from "@/components/latestCarousel";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -26,14 +27,25 @@ const latestWorks = [
     category: "3D Animation",
     videoSrc: "/videos/Plane.mp4",
   },
+  {
+    id: 4,
+    title: "Portfolio Showreel",
+    category: "Showreel",
+    videoSrc: "/videos/portfolio.mp4",
+  },
+  {
+    id: 5,
+    title: "Visual Story",
+    category: "Motion Graphics",
+    videoSrc: "/videos/vid.mp4",
+  },
 ];
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
-  const [isMounted, setIsMounted] = useState(false); // Track mount state
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Detect mobile early - but ONLY after mount
   useEffect(() => {
     setIsMounted(true);
     const checkMobile = () => {
@@ -43,12 +55,10 @@ export default function Home() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
-    // Optimized scroll handler
     const handleScroll = () => {
       setShowScrollIndicator(window.scrollY < 50);
     };
 
-    // Throttle scroll events
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
@@ -57,7 +67,6 @@ export default function Home() {
     };
   }, []);
 
-  // Different settings for mobile vs desktop
   const starsConfig =
     !isMounted || isMobile
       ? {
@@ -75,7 +84,6 @@ export default function Home() {
     <div className="relative text-white w-full min-h-screen overflow-hidden">
       {/* MOBILE-OPTIMIZED HEADER */}
       <section className="relative w-full h-screen overflow-hidden">
-        {/* Optimized Video */}
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-[-2]"
           autoPlay
@@ -88,12 +96,9 @@ export default function Home() {
           Your browser does not support the video tag.
         </video>
 
-        {/* Simple overlay - no gradients */}
         <div className="absolute inset-0 bg-black/50 z-[-1]" />
 
-        {/* Main Content - Minimal animations */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-          {/* Title - No animation on mobile */}
           <div className="relative mb-4 sm:mb-8">
             {!isMounted || isMobile ? (
               <h1 className="mt-4 text-4xl font-extrabold tracking-widest text-white font-bonheur">
@@ -111,7 +116,6 @@ export default function Home() {
             )}
           </div>
 
-          {/* Tagline - Simplified */}
           <div className="max-w-2xl">
             {!isMounted || isMobile ? (
               <div>
@@ -157,7 +161,6 @@ export default function Home() {
             )}
           </div>
 
-          {/* Scroll Indicator - Only show if not scrolled */}
           {isMounted && showScrollIndicator && (
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
               <div className="flex flex-col items-center">
@@ -185,7 +188,6 @@ export default function Home() {
 
       {/* MOBILE-OPTIMIZED ABOUT SECTION */}
       <section className="py-12 sm:py-24 px-4 sm:px-6 bg-black relative">
-        {/* Only show stars background on desktop */}
         {isMounted && !isMobile && (
           <GravityStarsBackground
             className="absolute inset-0"
@@ -206,7 +208,7 @@ export default function Home() {
           About Me
         </motion.h2>
 
-        {/* BLOCK 1 - Stack on mobile */}
+        {/* BLOCK 1 */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12 max-w-4xl mx-auto mb-12 sm:mb-24">
           <div className="w-full lg:w-1/2 flex justify-center">
             <AnimatedAvatar
@@ -254,7 +256,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* BLOCK 2 - Reverse stack on mobile */}
+        {/* BLOCK 2 */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12 max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -304,7 +306,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LATEST WORKS SECTION */}
+      {/* LATEST WORKS CAROUSEL SECTION */}
       <section
         id="projects"
         className="py-12 sm:py-24 px-4 sm:px-6 bg-black relative"
@@ -331,44 +333,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {latestWorks.map((work, index) => (
-              <motion.div
-                key={work.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300"
-              >
-                <div className="aspect-video relative overflow-hidden">
-                  <video
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    muted
-                    loop
-                    playsInline
-                    onMouseEnter={(e) => e.currentTarget.play()}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.pause();
-                      e.currentTarget.currentTime = 0;
-                    }}
-                    onTouchStart={(e) => e.currentTarget.play()}
-                  >
-                    <source src={work.videoSrc} type="video/mp4" />
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                <div className="p-4">
-                  <span className="text-xs text-blue-400 uppercase tracking-wider">
-                    {work.category}
-                  </span>
-                  <h3 className="mt-1 text-lg font-semibold text-white">
-                    {work.title}
-                  </h3>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <WorksCarousel works={latestWorks} />
         </motion.div>
       </section>
     </div>
