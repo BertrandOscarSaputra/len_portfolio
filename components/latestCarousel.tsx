@@ -87,10 +87,10 @@ export default function WorksCarousel({ works }: WorksCarouselProps) {
                     x: isMobile
                       ? 0
                       : position === 0
-                      ? -380
-                      : position === 2
-                      ? 380
-                      : 0,
+                        ? -380
+                        : position === 2
+                          ? 380
+                          : 0,
                     zIndex: isCenter ? 10 : 5,
                   }}
                   exit={{
@@ -185,7 +185,7 @@ export default function WorksCarousel({ works }: WorksCarouselProps) {
       {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
-        className="absolute left-0 sm:left-2 cursor-pointer top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-300 hover:scale-110 shadow-lg"
+        className="absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-300 hover:scale-110 shadow-lg"
         aria-label="Previous slide"
       >
         <svg
@@ -205,7 +205,7 @@ export default function WorksCarousel({ works }: WorksCarouselProps) {
 
       <button
         onClick={goToNext}
-        className="absolute right-0 cursor-pointer sm:right-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-300 hover:scale-110 shadow-lg"
+        className="absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-300 hover:scale-110 shadow-lg"
         aria-label="Next slide"
       >
         <svg

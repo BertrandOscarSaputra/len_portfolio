@@ -5,54 +5,51 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import VideoCard from "@/components/videoCard";
 import VideoModal from "@/components/videoModal";
-
-// Gallery works data - can be expanded with more content
-const galleryWorks = [
-  {
-    id: 1,
-    title: "Cinematic Intro",
-    category: "Motion Graphics",
-    description:
-      "A dynamic motion graphics intro with cinematic transitions and effects.",
-    videoSrc: "/videos/main.mp4",
-  },
-  {
-    id: 2,
-    title: "Character Animation",
-    category: "Animation",
-    description:
-      "Stylized character animation with fluid movements and expressive design.",
-    videoSrc: "/videos/animegirl.mp4",
-  },
-  {
-    id: 3,
-    title: "3D Visualization",
-    category: "3D Animation",
-    description:
-      "High-quality 3D render showcasing detailed modeling and lighting.",
-    videoSrc: "/videos/Plane.mp4",
-  },
-  {
-    id: 4,
-    title: "Portfolio Showreel",
-    category: "Showreel",
-    description:
-      "A compilation of best works featuring various motion design techniques.",
-    videoSrc: "/videos/portfolio.mp4",
-  },
-];
-
-const categories = [
-  "All",
-  ...new Set(galleryWorks.map((work) => work.category)),
-];
+import { getAllWorks } from "@/lib/queries";
+import { getFileUrl } from "@/lib/sanity";
+import type { Work } from "@/lib/queries";
 
 export default function GalleryPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedWork, setSelectedWork] = useState<
-    (typeof galleryWorks)[0] | null
-  >(null);
+  const [selectedWork, setSelectedWork] = useState<any | null>(null);
+  const [galleryWorks, setGalleryWorks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<string[]>(["All"]);
+
+  // Fetch works from Sanity
+  useEffect(() => {
+    async function fetchWorks() {
+      try {
+        const works = await getAllWorks();
+
+        // Transform Sanity data to match component format
+        const transformedWorks = works.map((work: Work) => ({
+          id: work._id,
+          title: work.title,
+          category: work.category,
+          description: work.description || "",
+          videoSrc: work.video?.asset?.url || getFileUrl(work.video.asset._ref),
+        }));
+
+        setGalleryWorks(transformedWorks);
+
+        // Extract unique categories
+        const uniqueCategories = [
+          "All",
+          ...new Set(works.map((work: Work) => work.category)),
+        ];
+        setCategories(uniqueCategories as string[]);
+      } catch (error) {
+        console.error("Error fetching works:", error);
+        setGalleryWorks([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchWorks();
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -121,17 +118,32 @@ export default function GalleryPage() {
       {/* Gallery Grid */}
       <section className="px-4 sm:px-6 pb-16 sm:pb-24">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            {filteredWorks.map((work, index) => (
-              <VideoCard
-                key={work.id}
-                work={work}
-                index={index}
-                isMobile={isMobile}
-                onSelect={() => setSelectedWork(work)}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-gray-400">Loading gallery...</div>
+            </div>
+          ) : galleryWorks.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              {filteredWorks.map((work, index) => (
+                <VideoCard
+                  key={work.id}
+                  work={work}
+                  index={index}
+                  isMobile={isMobile}
+                  onSelect={() => setSelectedWork(work)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-center">
+                <p className="text-gray-400 mb-4">No works available yet.</p>
+                <p className="text-sm text-gray-500">
+                  Add content through your Sanity Studio
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

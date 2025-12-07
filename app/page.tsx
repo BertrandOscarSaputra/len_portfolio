@@ -6,33 +6,43 @@ import WorksCarousel from "@/components/latestCarousel";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-// Sample works data - can be replaced with actual content
-const latestWorks = [
-  {
-    id: 1,
-    title: "Cinematic Intro",
-    category: "Motion Graphics",
-    videoSrc: "/videos/main.mp4",
-  },
-  {
-    id: 2,
-    title: "Character Animation",
-    category: "Animation",
-    videoSrc: "/videos/animegirl.mp4",
-  },
-  {
-    id: 3,
-    title: "3D Visualization",
-    category: "3D Animation",
-    videoSrc: "/videos/Plane.mp4",
-  },
-];
+import { getFeaturedWorks } from "@/lib/queries";
+import { getFileUrl } from "@/lib/sanity";
+import type { Work } from "@/lib/queries";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [latestWorks, setLatestWorks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch works from Sanity
+  useEffect(() => {
+    async function fetchWorks() {
+      try {
+        const works = await getFeaturedWorks();
+
+        // Transform Sanity data to match carousel format
+        const transformedWorks = works.map((work: Work) => ({
+          id: work._id,
+          title: work.title,
+          category: work.category,
+          videoSrc: work.video?.asset?.url || getFileUrl(work.video.asset._ref),
+        }));
+
+        setLatestWorks(transformedWorks);
+      } catch (error) {
+        console.error("Error fetching works:", error);
+        // Fallback to empty array if fetch fails
+        setLatestWorks([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchWorks();
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -321,7 +331,17 @@ export default function Home() {
             </Link>
           </div>
 
-          <WorksCarousel works={latestWorks} />
+          {loading ? (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-gray-400">Loading works...</div>
+            </div>
+          ) : latestWorks.length > 0 ? (
+            <WorksCarousel works={latestWorks} />
+          ) : (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-gray-400">No works available yet.</div>
+            </div>
+          )}
         </motion.div>
       </section>
     </div>
