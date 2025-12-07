@@ -1,16 +1,18 @@
-// schemas/work.ts
-export default {
+// sanity/schemas/work.ts
+import { defineField, defineType } from "sanity";
+
+export default defineType({
   name: "work",
   title: "Portfolio Work",
   type: "document",
   fields: [
-    {
+    defineField({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -18,9 +20,9 @@ export default {
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "category",
       title: "Category",
       type: "string",
@@ -32,50 +34,50 @@ export default {
           { title: "Showreel", value: "Showreel" },
         ],
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "text",
       rows: 3,
-    },
-    {
+    }),
+    defineField({
       name: "video",
       title: "Video File",
       type: "file",
       options: {
         accept: "video/*",
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "thumbnail",
       title: "Thumbnail Image",
       type: "image",
       options: {
         hotspot: true,
       },
-    },
-    {
+    }),
+    defineField({
       name: "featured",
       title: "Featured on Homepage",
       type: "boolean",
       description: "Show this work in the Latest Works carousel",
       initialValue: false,
-    },
-    {
+    }),
+    defineField({
       name: "order",
       title: "Display Order",
       type: "number",
       description: "Lower numbers appear first",
-    },
-    {
+    }),
+    defineField({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
       initialValue: () => new Date().toISOString(),
-    },
+    }),
   ],
   orderings: [
     {
@@ -95,7 +97,7 @@ export default {
       category: "category",
       media: "thumbnail",
     },
-    prepare({ title, category, media }: any) {
+    prepare({ title, category, media }) {
       return {
         title,
         subtitle: category,
@@ -103,4 +105,4 @@ export default {
       };
     },
   },
-};
+});

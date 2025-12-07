@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Bonheur_Royale } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import ConditionalLayout from "@/components/conditionalLayout";
 import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
@@ -36,12 +35,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${bonheurRoyale.variable} antialiased`}
       >
-        <Navbar />
-
-        <main>{children}</main>
-        <Analytics />
-
-        <Footer />
+        <ConditionalLayout>
+          <main>{children}</main>
+          <Analytics />
+        </ConditionalLayout>
       </body>
     </html>
   );

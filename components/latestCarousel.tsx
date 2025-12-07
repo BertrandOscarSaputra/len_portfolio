@@ -52,13 +52,15 @@ export default function WorksCarousel({ works }: WorksCarouselProps) {
   };
 
   // Mobile: show only current slide
-  // Desktop: show current + 2 side slides
+  // Desktop: show current + 2 side slides (only if we have more than 1 work)
   const getVisibleSlides = () => {
-    if (isMobile) return [currentIndex];
+    if (isMobile || works.length <= 1) return [currentIndex];
 
     const prev = (currentIndex - 1 + works.length) % works.length;
     const next = (currentIndex + 1) % works.length;
-    return [prev, currentIndex, next];
+
+    // Return unique indices only
+    return Array.from(new Set([prev, currentIndex, next]));
   };
 
   const visibleSlides = getVisibleSlides();
@@ -69,14 +71,17 @@ export default function WorksCarousel({ works }: WorksCarouselProps) {
       <div className="relative overflow-visible">
         <div className="flex items-center justify-center min-h-[350px] sm:min-h-[450px] px-4 sm:px-16 py-8">
           <AnimatePresence mode="popLayout">
-            {visibleSlides.map((slideIndex, position) => {
+            {visibleSlides.map((slideIndex) => {
               const work = works[slideIndex];
               const isCenter = slideIndex === currentIndex;
               const isSide = !isCenter;
 
+              // Calculate position for animation
+              const position = visibleSlides.indexOf(slideIndex);
+
               return (
                 <motion.div
-                  key={`${work.id}-${slideIndex}`}
+                  key={`work-${work.id}-${slideIndex}`}
                   initial={{
                     opacity: 0,
                     scale: 0.8,
@@ -86,11 +91,13 @@ export default function WorksCarousel({ works }: WorksCarouselProps) {
                     scale: isCenter ? 1 : 0.8,
                     x: isMobile
                       ? 0
-                      : position === 0
-                        ? -380
-                        : position === 2
-                          ? 380
-                          : 0,
+                      : visibleSlides.length === 1
+                        ? 0
+                        : position === 0
+                          ? -380
+                          : position === 2
+                            ? 380
+                            : 0,
                     zIndex: isCenter ? 10 : 5,
                   }}
                   exit={{
