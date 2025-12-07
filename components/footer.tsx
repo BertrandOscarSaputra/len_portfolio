@@ -1,6 +1,6 @@
-import Image from "next/image";
-
 export default function Footer() {
+  const currentYear = 2025; // Or 2025 depending on the current year
+
   return (
     <footer className="bg-black border-t border-white/10 py-12 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
@@ -77,7 +77,7 @@ export default function Footer() {
 
       {/* Bottom */}
       <div className="text-center mt-10 text-gray-500 text-sm">
-        © {new Date().getFullYear()} Fallen Studio — All Rights Reserved.
+        © {currentYear} Fallen Studio — All Rights Reserved.
       </div>
     </footer>
   );

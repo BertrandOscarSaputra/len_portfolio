@@ -31,9 +31,11 @@ const latestWorks = [
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [isMounted, setIsMounted] = useState(false); // Track mount state
 
-  // Detect mobile early
+  // Detect mobile early - but ONLY after mount
   useEffect(() => {
+    setIsMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -42,7 +44,6 @@ export default function Home() {
     window.addEventListener("resize", checkMobile);
 
     // Optimized scroll handler
-    let scrollTimeout: NodeJS.Timeout | undefined;
     const handleScroll = () => {
       setShowScrollIndicator(window.scrollY < 50);
     };
@@ -53,28 +54,28 @@ export default function Home() {
     return () => {
       window.removeEventListener("resize", checkMobile);
       window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, []);
 
   // Different settings for mobile vs desktop
-  const starsConfig = isMobile
-    ? {
-        starsCount: 30,
-        gravityStrength: 30,
-        starsInteraction: false,
-      }
-    : {
-        starsCount: 50,
-        gravityStrength: 50,
-        starsInteraction: false,
-      };
+  const starsConfig =
+    !isMounted || isMobile
+      ? {
+          starsCount: 30,
+          gravityStrength: 30,
+          starsInteraction: false,
+        }
+      : {
+          starsCount: 50,
+          gravityStrength: 50,
+          starsInteraction: false,
+        };
 
   return (
     <div className="relative text-white w-full min-h-screen overflow-hidden">
       {/* MOBILE-OPTIMIZED HEADER */}
       <section className="relative w-full h-screen overflow-hidden">
-        {/* Optimized Video - consider using poster image for mobile */}
+        {/* Optimized Video */}
         <video
           className="absolute top-0 left-0 w-full h-full object-cover z-[-2]"
           autoPlay
@@ -82,16 +83,9 @@ export default function Home() {
           muted
           playsInline
           preload="metadata"
-          webkit-playsinline="true"
-          poster="/images/video-poster.jpg"
         >
-          <source src="/videos/vid.mp4" type="video/mp4" />
-          {/* Fallback image for unsupported browsers */}
-          <img
-            src="/images/video-poster.jpg"
-            alt="Background"
-            className="w-full h-full object-cover"
-          />
+          <source src="/videos/portfolio.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
 
         {/* Simple overlay - no gradients */}
@@ -101,7 +95,7 @@ export default function Home() {
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
           {/* Title - No animation on mobile */}
           <div className="relative mb-4 sm:mb-8">
-            {isMobile ? (
+            {!isMounted || isMobile ? (
               <h1 className="mt-4 text-4xl font-extrabold tracking-widest text-white font-bonheur">
                 Len Licht
               </h1>
@@ -119,7 +113,7 @@ export default function Home() {
 
           {/* Tagline - Simplified */}
           <div className="max-w-2xl">
-            {isMobile ? (
+            {!isMounted || isMobile ? (
               <div>
                 <p className="mt-4 text-base text-gray-300 font-light">
                   Creating{" "}
@@ -164,7 +158,7 @@ export default function Home() {
           </div>
 
           {/* Scroll Indicator - Only show if not scrolled */}
-          {showScrollIndicator && (
+          {isMounted && showScrollIndicator && (
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
               <div className="flex flex-col items-center">
                 <div className="w-4 h-6 sm:w-5 sm:h-8 border border-gray-400/20 rounded-full flex justify-center pt-1">
@@ -178,7 +172,7 @@ export default function Home() {
                     className="w-1 h-2 bg-gray-400/40 rounded-full"
                   />
                 </div>
-                {!isMobile && (
+                {isMounted && !isMobile && (
                   <p className="mt-1 text-[10px] sm:text-xs text-gray-400/60 tracking-wider">
                     Scroll
                   </p>
@@ -192,7 +186,7 @@ export default function Home() {
       {/* MOBILE-OPTIMIZED ABOUT SECTION */}
       <section className="py-12 sm:py-24 px-4 sm:px-6 bg-black relative">
         {/* Only show stars background on desktop */}
-        {!isMobile && (
+        {isMounted && !isMobile && (
           <GravityStarsBackground
             className="absolute inset-0"
             {...starsConfig}
@@ -203,7 +197,10 @@ export default function Home() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          viewport={{ once: true, margin: isMobile ? "0px" : "-50px" }}
+          viewport={{
+            once: true,
+            margin: !isMounted || isMobile ? "0px" : "-50px",
+          }}
           className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-16 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
         >
           About Me
@@ -215,14 +212,14 @@ export default function Home() {
             <AnimatedAvatar
               src="/images/len_avatar.png"
               alt="Avatar 1"
-              size={isMobile ? 160 : 240}
+              size={!isMounted ? 240 : isMobile ? 160 : 240}
               hasBox={false}
               direction="left"
               rotateDirection="clockwise"
               delay={0.1}
-              rotate3D={!isMobile} // Disable 3D rotation on mobile
+              rotate3D={isMounted && !isMobile}
               interactive={false}
-              className={isMobile ? "" : "scale-95"}
+              className={!isMounted || isMobile ? "" : "scale-95"}
             />
           </div>
 
@@ -278,7 +275,7 @@ export default function Home() {
                 Every project starts with understanding the emotional core,
                 ensuring visuals resonate deeply with the audience.
               </p>
-              {!isMobile && (
+              {isMounted && !isMobile && (
                 <motion.div
                   className="mt-4 sm:mt-6 h-1 w-12 sm:w-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                   initial={{ width: 0 }}
@@ -294,14 +291,14 @@ export default function Home() {
             <AnimatedAvatar
               src="/images/len_avatar.png"
               alt="Avatar 2"
-              size={isMobile ? 160 : 240}
+              size={!isMounted ? 240 : isMobile ? 160 : 240}
               hasBox={false}
               direction="right"
               rotateDirection="counter-clockwise"
               delay={0.1}
-              rotate3D={!isMobile} // Disable 3D rotation on mobile
+              rotate3D={isMounted && !isMobile}
               interactive={false}
-              className={isMobile ? "" : "scale-95"}
+              className={!isMounted || isMobile ? "" : "scale-95"}
             />
           </div>
         </div>
