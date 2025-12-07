@@ -27,18 +27,6 @@ const latestWorks = [
     category: "3D Animation",
     videoSrc: "/videos/Plane.mp4",
   },
-  {
-    id: 4,
-    title: "Portfolio Showreel",
-    category: "Showreel",
-    videoSrc: "/videos/portfolio.mp4",
-  },
-  {
-    id: 5,
-    title: "Visual Story",
-    category: "Motion Graphics",
-    videoSrc: "/videos/vid.mp4",
-  },
 ];
 
 export default function Home() {

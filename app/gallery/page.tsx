@@ -40,14 +40,6 @@ const galleryWorks = [
       "A compilation of best works featuring various motion design techniques.",
     videoSrc: "/videos/portfolio.mp4",
   },
-  {
-    id: 5,
-    title: "Visual Story",
-    category: "Motion Graphics",
-    description:
-      "An atmospheric piece blending visuals with emotional storytelling.",
-    videoSrc: "/videos/vid.mp4",
-  },
 ];
 
 const categories = [
