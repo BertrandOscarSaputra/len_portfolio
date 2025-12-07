@@ -16,7 +16,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
 
-  function handleNavClick(e: React.MouseEvent, link: typeof LINKS[0]) {
+  function handleNavClick(e: React.MouseEvent, link: (typeof LINKS)[0]) {
     setOpen(false);
     setActive(link.id);
 
@@ -47,8 +47,10 @@ export default function Navbar() {
               const el = document.getElementById("home");
               if (el) {
                 e.preventDefault();
-                const navHeight = document.querySelector("nav")?.clientHeight ?? 72;
-                const offset = el.getBoundingClientRect().top + window.scrollY - navHeight;
+                const navHeight =
+                  document.querySelector("nav")?.clientHeight ?? 72;
+                const offset =
+                  el.getBoundingClientRect().top + window.scrollY - navHeight;
                 window.scrollTo({ top: offset, behavior: "smooth" });
               }
             }}

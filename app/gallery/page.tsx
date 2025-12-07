@@ -10,45 +10,55 @@ const galleryWorks = [
     id: 1,
     title: "Cinematic Intro",
     category: "Motion Graphics",
-    description: "A dynamic motion graphics intro with cinematic transitions and effects.",
+    description:
+      "A dynamic motion graphics intro with cinematic transitions and effects.",
     videoSrc: "/videos/main.mp4",
   },
   {
     id: 2,
     title: "Character Animation",
     category: "Animation",
-    description: "Stylized character animation with fluid movements and expressive design.",
+    description:
+      "Stylized character animation with fluid movements and expressive design.",
     videoSrc: "/videos/animegirl.mp4",
   },
   {
     id: 3,
     title: "3D Visualization",
     category: "3D Animation",
-    description: "High-quality 3D render showcasing detailed modeling and lighting.",
+    description:
+      "High-quality 3D render showcasing detailed modeling and lighting.",
     videoSrc: "/videos/Plane.mp4",
   },
   {
     id: 4,
     title: "Portfolio Showreel",
     category: "Showreel",
-    description: "A compilation of best works featuring various motion design techniques.",
+    description:
+      "A compilation of best works featuring various motion design techniques.",
     videoSrc: "/videos/portfolio.mp4",
   },
   {
     id: 5,
     title: "Visual Story",
     category: "Motion Graphics",
-    description: "An atmospheric piece blending visuals with emotional storytelling.",
+    description:
+      "An atmospheric piece blending visuals with emotional storytelling.",
     videoSrc: "/videos/vid.mp4",
   },
 ];
 
-const categories = ["All", ...new Set(galleryWorks.map((work) => work.category))];
+const categories = [
+  "All",
+  ...new Set(galleryWorks.map((work) => work.category)),
+];
 
 export default function GalleryPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedWork, setSelectedWork] = useState<typeof galleryWorks[0] | null>(null);
+  const [selectedWork, setSelectedWork] = useState<
+    (typeof galleryWorks)[0] | null
+  >(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -76,14 +86,17 @@ export default function GalleryPage() {
               href="/"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
             >
-              <span className="hover:-translate-x-1 transition-transform">←</span>
+              <span className="hover:-translate-x-1 transition-transform">
+                ←
+              </span>
               Back to Home
             </Link>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Gallery
             </h1>
             <p className="mt-4 text-gray-400 text-base sm:text-lg max-w-2xl">
-              A collection of motion graphics, animations, and visual projects showcasing creative storytelling and design.
+              A collection of motion graphics, animations, and visual projects
+              showcasing creative storytelling and design.
             </p>
           </motion.div>
 

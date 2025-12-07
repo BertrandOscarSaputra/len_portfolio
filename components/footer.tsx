@@ -28,56 +28,44 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
 
           <ul className="flex md:flex-col justify-center md:justify-start gap-4 md:gap-3 text-gray-400 text-lg">
-            {/* Discord */}
             <li className="hover:text-white cursor-pointer flex items-center gap-3">
               <div className="w-8 h-8 flex items-center justify-center">
-                <Image
+                <img
                   src="/images/discord.svg"
                   alt="Discord"
-                  width={20}
-                  height={20}
                   className="invert brightness-200 w-5 h-5"
                 />
               </div>
               Discord
             </li>
 
-            {/* X / Twitter */}
             <li className="hover:text-white cursor-pointer flex items-center gap-3">
               <div className="w-8 h-8 flex items-center justify-center">
-                <Image
+                <img
                   src="/images/x.svg"
-                  alt="X (Twitter)"
-                  width={20}
-                  height={20}
+                  alt="X"
                   className="invert brightness-200 w-5 h-5"
                 />
               </div>
               X
             </li>
 
-            {/* Instagram */}
             <li className="hover:text-white cursor-pointer flex items-center gap-3">
               <div className="w-8 h-8 flex items-center justify-center">
-                <Image
+                <img
                   src="/images/instagram.svg"
                   alt="Instagram"
-                  width={20}
-                  height={20}
                   className="invert brightness-200 w-5 h-5"
                 />
               </div>
               Instagram
             </li>
 
-            {/* YouTube */}
             <li className="hover:text-white cursor-pointer flex items-center gap-3">
               <div className="w-8 h-8 flex items-center justify-center">
-                <Image
+                <img
                   src="/images/youtube.svg"
                   alt="YouTube"
-                  width={20}
-                  height={20}
                   className="invert brightness-200 w-5 h-5"
                 />
               </div>

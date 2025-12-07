@@ -85,7 +85,7 @@ export default function Home() {
           webkit-playsinline="true"
           poster="/images/video-poster.jpg"
         >
-          <source src="/videos/portfolio.mp4" type="video/mp4" />
+          <source src="/videos/vid.mp4" type="video/mp4" />
           {/* Fallback image for unsupported browsers */}
           <img
             src="/images/video-poster.jpg"
@@ -308,7 +308,10 @@ export default function Home() {
       </section>
 
       {/* LATEST WORKS SECTION */}
-      <section id="projects" className="py-12 sm:py-24 px-4 sm:px-6 bg-black relative">
+      <section
+        id="projects"
+        className="py-12 sm:py-24 px-4 sm:px-6 bg-black relative"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -325,7 +328,9 @@ export default function Home() {
               className="mt-4 sm:mt-0 text-sm sm:text-base text-gray-400 hover:text-white transition-colors flex items-center gap-2 group"
             >
               View All
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
 
