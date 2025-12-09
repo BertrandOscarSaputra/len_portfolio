@@ -59,7 +59,7 @@ export default function Footer() {
                   <span className="font-medium text-white">Contact:</span>
                   <a
                     href={`mailto:${contactInfo.email}`}
-                    className="hover:text-blue-300 transition-colors text-sm sm:text-base break-all"
+                    className="hover:text-blue-300 transition-colors text-sm font-bold sm:text-base break-all"
                   >
                     {contactInfo.email}
                   </a>

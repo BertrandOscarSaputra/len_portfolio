@@ -108,19 +108,22 @@ export default function Home() {
         isPageVisible ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* MOBILE-OPTIMIZED HEADER */}
+      {/* MOBILE-OPTIMIZED HEADER - FIXED FOR DESKTOP */}
       <section className="relative w-full h-screen overflow-hidden">
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover z-[-2]"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        >
-          <source src="/videos/portfolio.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* Hero Video - Fixed to ensure full coverage */}
+        <div className="absolute inset-0">
+          <video
+            className="absolute top-0 left-0 w-full h-full object-cover z-[-2] min-w-full min-h-full"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          >
+            <source src="/videos/vid.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
 
         <div className="absolute inset-0 bg-black/50 z-[-1]" />
 
