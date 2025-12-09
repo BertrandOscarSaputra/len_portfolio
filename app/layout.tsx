@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${bonheurRoyale.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bonheurRoyale.variable} antialiased bg-black text-white`}
       >
         <ConditionalLayout>
           <main>{children}</main>

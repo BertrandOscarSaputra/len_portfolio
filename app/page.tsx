@@ -16,9 +16,17 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const [latestWorks, setLatestWorks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isPageVisible, setIsPageVisible] = useState(false);
 
   // Fetch works from Sanity
   useEffect(() => {
+    // Check if we have a saved scroll position IMMEDIATELY
+    // If not, we can show the page right away so there's no unnecessary delay
+    const hasSavedScroll = sessionStorage.getItem("home_scroll_pos");
+    if (!hasSavedScroll) {
+      setIsPageVisible(true);
+    }
+
     async function fetchWorks() {
       try {
         const works = await getFeaturedWorks();
@@ -38,6 +46,22 @@ export default function Home() {
         setLatestWorks([]);
       } finally {
         setLoading(false);
+        // Restore scroll position if available
+        const savedScroll = sessionStorage.getItem("home_scroll_pos");
+        if (savedScroll) {
+          setTimeout(() => {
+            window.scrollTo({
+              top: parseInt(savedScroll),
+              behavior: "instant",
+            });
+            sessionStorage.removeItem("home_scroll_pos");
+            // Show page AFTER the scroll jump
+            setIsPageVisible(true);
+          }, 100);
+        } else {
+          // Ensure visible if checks failed or logic fell through
+          setIsPageVisible(true);
+        }
       }
     }
 
@@ -79,7 +103,11 @@ export default function Home() {
         };
 
   return (
-    <div className="relative text-white w-full min-h-screen overflow-hidden">
+    <div
+      className={`relative text-white w-full min-h-screen overflow-hidden transition-opacity duration-500 ${
+        isPageVisible ? "opacity-100" : "opacity-0"
+      }`}
+    >
       {/* MOBILE-OPTIMIZED HEADER */}
       <section className="relative w-full h-screen overflow-hidden">
         <video
@@ -322,6 +350,9 @@ export default function Home() {
             </h2>
             <Link
               href="/gallery"
+              onClick={() => {
+                sessionStorage.setItem("home_scroll_pos", window.scrollY.toString());
+              }}
               className="mt-4 sm:mt-0 text-sm sm:text-base text-gray-400 hover:text-white transition-colors flex items-center gap-2 group"
             >
               View All
