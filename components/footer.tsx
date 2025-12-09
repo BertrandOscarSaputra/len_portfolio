@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = 2025;
 
   const contactInfo = {
-    email: "lenlicht@gmail.com",
+    email: "animalicht@gmail.com",
   };
 
   const socialLinks = [

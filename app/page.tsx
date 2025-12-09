@@ -99,15 +99,15 @@ export default function Home() {
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
           <div className="relative mb-4 sm:mb-8">
             {!isMounted || isMobile ? (
-              <h1 className="mt-4 text-4xl font-extrabold tracking-widest text-white font-bonheur">
+              <h1 className="mt-4 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-widest text-white font-bonheur drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
                 Len Licht
               </h1>
             ) : (
               <motion.h1
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="mt-4 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-widest text-white font-bonheur"
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="mt-4 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-widest text-white font-bonheur drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
               >
                 Len Licht
               </motion.h1>
@@ -117,41 +117,41 @@ export default function Home() {
           <div className="max-w-2xl">
             {!isMounted || isMobile ? (
               <div>
-                <p className="mt-4 text-base text-gray-300 font-light">
+                <p className="mt-4 text-lg text-gray-200 font-light tracking-wider">
                   Creating{" "}
-                  <span className="text-blue-300">cinematic animations</span>,
-                  <span className="text-purple-300"> dynamic visuals</span>, and
-                  <span className="text-blue-300">
+                  <span className="text-blue-200">cinematic animations</span>,
+                  <span className="text-purple-200"> dynamic visuals</span>, and
+                  <span className="text-blue-200">
                     {" "}
                     impactful motion graphics
                   </span>
                 </p>
-                <p className="mt-2 text-sm text-gray-400">
+                <p className="mt-2 text-sm text-gray-400 font-light tracking-wide">
                   Crafting visual stories that move, inspire, and transform
                   ideas
                 </p>
               </div>
             ) : (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
               >
-                <p className="mt-4 sm:mt-6 text-base sm:text-xl md:text-2xl text-gray-300 font-light tracking-wide">
+                <p className="mt-4 sm:mt-6 text-lg sm:text-2xl md:text-3xl text-gray-200 font-light tracking-wider leading-relaxed">
                   Creating{" "}
-                  <span className="text-blue-300 font-medium">
+                  <span className="text-blue-200 font-normal drop-shadow-sm">
                     cinematic animations
                   </span>
                   ,{" "}
-                  <span className="text-purple-300 font-medium">
+                  <span className="text-purple-200 font-normal drop-shadow-sm">
                     dynamic visuals
                   </span>
                   , and{" "}
-                  <span className="text-blue-300 font-medium">
+                  <span className="text-blue-200 font-normal drop-shadow-sm">
                     impactful motion graphics
                   </span>
                 </p>
-                <p className="mt-2 sm:mt-3 text-sm sm:text-base text-gray-400">
+                <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-gray-400/80 font-light tracking-widest uppercase">
                   Crafting visual stories that move, inspire, and transform
                   ideas into unforgettable experiences
                 </p>
