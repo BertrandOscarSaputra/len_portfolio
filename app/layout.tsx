@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   description:
     "Len Licht is a Motion Graphic Designer specializing in motion graphics, live 2d animation, and 3D design.",
   keywords: [
+    "lenlicht",
     "Len Licht",
     "Motion Graphic Designer",
     "Live 2D animations",
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
     "Anime Music Video",
     "AMV",
     "Music Video",
+    "Animator"
   ],
   authors: [{ name: "Len Licht" }],
   creator: "Len Licht",

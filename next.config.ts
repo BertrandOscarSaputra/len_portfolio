@@ -5,12 +5,23 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: `
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval';
+      script-src
+        'self'
+        'unsafe-inline'
+        'unsafe-eval'
+        https://vercel.live
+        https://vitals.vercel-insights.com;
       style-src 'self' 'unsafe-inline';
       img-src 'self' data: https://cdn.sanity.io;
       font-src 'self' data: https:;
       media-src 'self' blob: https://cdn.sanity.io;
-      connect-src 'self' https://cdn.sanity.io https:;
+      connect-src
+        'self'
+        https://cdn.sanity.io
+        https://vercel.live
+        https://vitals.vercel-insights.com
+        wss://vercel.live
+        https:;
       frame-ancestors 'self';
     `
       .replace(/\s{2,}/g, " ")
@@ -29,6 +40,7 @@ const securityHeaders = [
     value: "camera=(), microphone=(), geolocation=()",
   },
 ];
+
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
