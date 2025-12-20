@@ -2,6 +2,7 @@
 
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
 import AnimatedAvatar from "@/components/animatedAvatar";
+import ContactForm from "@/components/ContactForm";
 import WorksCarousel from "@/components/latestCarousel";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -377,6 +378,11 @@ export default function Home() {
             </div>
           )}
         </motion.div>
+      </section>
+
+      {/* CONTACT FORM SECTION */}
+      <section id="contact" className="bg-black relative">
+         <ContactForm />
       </section>
     </div>
   );
