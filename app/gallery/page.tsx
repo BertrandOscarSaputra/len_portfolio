@@ -86,8 +86,8 @@ export default function GalleryPage() {
               Gallery
             </h1>
             <p className="mt-4 text-gray-400 text-base sm:text-lg max-w-2xl">
-              A collection of motion graphics, animations, and visual projects
-              showcasing creative storytelling and design.
+              A collection of my motion graphics, animations, and visual projects
+              
             </p>
           </motion.div>
 
