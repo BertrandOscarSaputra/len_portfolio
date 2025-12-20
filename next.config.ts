@@ -7,17 +7,14 @@ const securityHeaders = [
       default-src 'self';
       script-src 'self' 'unsafe-inline' 'unsafe-eval';
       style-src 'self' 'unsafe-inline';
-      img-src 'self' data: https:;
+      img-src 'self' data: https://cdn.sanity.io;
       font-src 'self' data: https:;
-      connect-src 'self' https:;
-      frame-ancestors 'none';
+      media-src 'self' blob: https://cdn.sanity.io;
+      connect-src 'self' https://cdn.sanity.io https:;
+      frame-ancestors 'self';
     `
       .replace(/\s{2,}/g, " ")
       .trim(),
-  },
-  {
-    key: "X-Frame-Options",
-    value: "DENY",
   },
   {
     key: "X-Content-Type-Options",
@@ -40,6 +37,12 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
   },
 
   compiler: {
