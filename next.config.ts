@@ -1,27 +1,46 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV !== "production";
+
 const securityHeaders = [
   {
     key: "Content-Security-Policy",
     value: `
       default-src 'self';
+
       script-src
         'self'
         'unsafe-inline'
         'unsafe-eval'
         https://vercel.live
         https://vitals.vercel-insights.com;
+
       style-src 'self' 'unsafe-inline';
-      img-src 'self' data: https://cdn.sanity.io;
+
+      img-src
+        'self'
+        data:
+        https://cdn.sanity.io;
+
       font-src 'self' data: https:;
-      media-src 'self' blob: https://cdn.sanity.io;
+
+      media-src
+        'self'
+        blob:
+        https://cdn.sanity.io;
+
       connect-src
         'self'
         https://cdn.sanity.io
         https://vercel.live
         https://vitals.vercel-insights.com
-        wss://vercel.live
-        https:;
+        https:
+        ${isDev ? "ws: wss:" : ""};
+
+      frame-src
+        'self'
+        https://vercel.live;
+
       frame-ancestors 'self';
     `
       .replace(/\s{2,}/g, " ")
@@ -47,9 +66,7 @@ const securityHeaders = [
     key: "Cross-Origin-Opener-Policy",
     value: "same-origin-allow-popups",
   },
-  
 ];
-
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
